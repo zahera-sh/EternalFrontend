@@ -91,6 +91,15 @@ function CreateItemPage() {
 
                 <br />
 
+                <label htmlFor="startingPrice">Starting Price:</label>
+                <input type="number"
+                    name='startingPrice'
+                    id='startingPrice'
+                    onChange={handleChange}
+                    value={formData.startingPrice} />
+
+                <br />
+
                 <label htmlFor="auctionStart">Start Date:</label>
                 <input type="date"
                     name='auctionStart'

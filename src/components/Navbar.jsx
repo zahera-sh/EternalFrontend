@@ -8,10 +8,13 @@ function Navbar() {
 
     return (
         <nav>
-            {/* Public Links */}
+
+            <Link to="/items">Items</Link>
+
             {user
                 ? (
                     <>
+                        <Link to="/items/create">Add Item</Link>
                         <button onClick={logout}>Sign Out</button>
                     </>
                 )

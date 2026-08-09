@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router";
+import { getCurrentUser, logout } from "./services/authService";
+import { useAuth } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import SignupPage from "./pages/SignupPage";
 import Homepage from "./pages/Homepage";
 import SignInPage from "./pages/SigninPage";
 import Dashboard from "./pages/Dashboard";
-import { useEffect } from "react";
-import { getCurrentUser, logout } from "./services/authService";
-import ProtectedRoute from "./components/ProtectedRoute";
-import { useAuth } from "./context/AuthContext";
+import CreateItemPage from "./pages/items/CreateItemPage";
+import ItemDetailsPage from "./pages/items/ItemDetailsPage";
+import ItemsListPage from "./pages/items/ItemsListPage";
+import UpdateItemPage from "./pages/items/UpdateItemPage";
 
 
 function App() {
@@ -23,6 +26,11 @@ function App() {
                 <Route path="/sign-up" element={<SignupPage />} />
                 <Route path="/sign-in" element={<SignInPage />} />
                 <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+
+                <Route path="/items" element={<ItemsListPage />} />
+                <Route path="/items/:itemId" element={<ItemDetailsPage />} />
+                <Route path="/items/create" element={<ProtectedRoute><CreateItemPage /></ProtectedRoute>} />
+                <Route path="/items/edit/:itemId" element={<ProtectedRoute><UpdateItemPage /></ProtectedRoute>} />
 
             </Routes>
             

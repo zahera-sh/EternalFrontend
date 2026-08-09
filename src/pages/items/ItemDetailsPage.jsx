@@ -5,28 +5,26 @@ import { getItemById } from "../../services/itemService";
 
 function ItemDetailsPage() {
 
-    const [item, setItem] = useState(null);
-    const { itemId } = useParams();
+    const [item, setItem] = useState(null)
+    const { itemId } = useParams()
 
     useEffect(() => {
 
         async function loadItem() {
 
             try {
-
-                const response = await getItemById(itemId);
-                setItem(response);
+                const response = await getItemById(itemId)
+                setItem(response)
 
             } catch (err) {
 
-                console.log(err);
-
+                console.log(err)
             }
         }
 
-        loadItem();
+        loadItem()
 
-    }), [];
+    }, [])
 
 
     return (
@@ -36,7 +34,7 @@ function ItemDetailsPage() {
                 ? (
                     <>
 
-                        <img src={item.image} alt="item-image" />
+                        <img src={item.image.url} alt="item-image" />
 
                         <h2>{item.title}</h2>
 

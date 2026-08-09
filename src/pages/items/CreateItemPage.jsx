@@ -14,21 +14,23 @@ function CreateItemPage() {
         auctionStart: "",
         auctionEnd: ""
     });
+
     const navigate = useNavigate();
 
     function handleChange(event) {
-        const { name, type, value, checked } = event.target;
+        const { name, type, value, checked, files } = event.target;
 
         setFormData((prev) => ({
             ...prev,
-            [name]: type === "checkbox" ? checked : value,
+            [name]: files ? files[0] : type === "checkbox" ? checked : value,
         }));
     }
 
     async function handleSubmit(event) {
         event.preventDefault();
 
-        const createdItem = await createItem(formData);
+        const data = new FormData(event.target);
+        const createdItem = await createItem(data)
         navigate(`/items/${createdItem._id}`);
 
     }
@@ -63,11 +65,12 @@ function CreateItemPage() {
                 <br />
 
                 <label htmlFor="image">Add Photo</label>
-                <input type="text"
-                    name='image'
-                    id='image'
+                <input type="file"
+                    name="image"
+                    id="image"
+                    accept="image/*"
                     onChange={handleChange}
-                    value={formData.image} />
+                />
 
                 <br />
 
@@ -115,7 +118,7 @@ function CreateItemPage() {
                     id='auctionEnd'
                     onChange={handleChange}
                     value={formData.auctionEnd} />
-
+                <br />
                 <button>Submit</button>
 
             </form >

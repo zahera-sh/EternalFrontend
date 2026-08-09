@@ -12,8 +12,14 @@ async function getAllItems() {
     return response.data
 }
 
+async function getItemById(itemId) {
+    const response = await api.get(`/items/${itemId}`);
+    return response.data
+}
+
 
 export {
     createItem,
     getAllItems,
+    getItemById,
 }

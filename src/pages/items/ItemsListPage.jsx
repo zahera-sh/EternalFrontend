@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAllItems } from '../../services/itemService';
 import { Link } from 'react-router';
-
+import '../../style/item-styles.css';
 
 function ItemsListPage() {
 
@@ -36,7 +36,7 @@ function ItemsListPage() {
 
         loadItems()
 
-    }, []);
+    }, [])
 
 
     return (
@@ -48,7 +48,7 @@ function ItemsListPage() {
 
             {activeItems.map((oneAItem) =>
                 <div key={oneAItem._id}>
-                    <img src={oneAItem.image} alt="item-img" />
+                    <img src={oneAItem.image.url} alt="item-img" />
                     <h2>{oneAItem.title}</h2>
                     <Link state={{ item: oneAItem }} to={`/items/${oneAItem._id}`}>See Details</Link>
                 </div>

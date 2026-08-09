@@ -9,11 +9,12 @@ function Signup() {
     const [error, setError] = useState("");
     const [formData, setFormData] = useState({
         username: "",
+        email: "",
         password: "",
         passwordConf: "",
     });
     const [submitting, setSubmitting] = useState(false);
-    const { username, password, passwordConf } = formData;
+    const { username, email, password, passwordConf } = formData;
 
     function handleChange(event) {
         setError("");
@@ -38,7 +39,7 @@ function Signup() {
     }
 
     function isFormInvalid() {
-        return !(username && password && password === passwordConf);
+        return !(username && email && password && password === passwordConf);
     }
 
     return (
@@ -53,6 +54,17 @@ function Signup() {
                         id="username"
                         value={username}
                         name="username"
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <label htmlFor="email">Email:</label>
+                    <input
+                        type="text"
+                        id="email"
+                        value={email}
+                        name="email"
                         onChange={handleChange}
                         required
                     />

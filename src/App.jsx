@@ -18,7 +18,7 @@ import SignupPage from "./pages/SignupPage";
 import Homepage from "./pages/Homepage";
 import SignInPage from "./pages/SigninPage";
 import Dashboard from "./pages/Dashboard";
-import Admin from './pages/Admin'
+import Admin from "./pages/Admin";
 import CreateItemPage from "./pages/items/CreateItemPage";
 import ItemDetailsPage from "./pages/items/ItemDetailsPage";
 import ItemsListPage from "./pages/items/ItemsListPage";
@@ -26,20 +26,34 @@ import UpdateItemPage from "./pages/items/UpdateItemPage";
 import BiddingPage from "./pages/BiddingPage";
 
 function App() {
-    // const { user } = useAuth()
-    // console.log(user)
-    
-    return (
-        <div>
+  // const { user } = useAuth()
+  // console.log(user)
 
-            <Navbar />
-            <Routes>
-
-                <Route path="/" element={<Homepage />} />
-                <Route path="/sign-up" element={<SignupPage />} />
-                <Route path="/sign-in" element={<SignInPage />} />
-                <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                <Route path='/admin' element={<ProtectedRoute><IsAdmin><Admin /></IsAdmin></ProtectedRoute>}></Route>
+  return (
+    <div>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/sign-up" element={<SignupPage />} />
+        <Route path="/sign-in" element={<SignInPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <IsAdmin>
+                <Admin />
+              </IsAdmin>
+            </ProtectedRoute>
+          }
+        ></Route>
 
         <Route
           path="/items/edit/:itemId"
@@ -57,14 +71,9 @@ function App() {
             </ProtectedRoute>
           }
         />
-
       </Routes>
     </div>
   );
-            </Routes>
-
-        </div>
-    );
 }
 
 export default App;

@@ -11,21 +11,25 @@ function Navbar() {
 
             <Link to="/items">Items</Link>
 
-            {user
-                ? (
-                    <>
-                        <Link to="/items/create">Add Item</Link>
-                        <button onClick={logout}>Sign Out</button>
-                    </>
-                )
+            {user && user.role === 'User' &&
+                (<>
+                    <Link to="/items/create">Add Item</Link>
+                    <button onClick={logout}>Sign Out</button>
+                </>)}
 
-                : (
-                    <>
-                        <Link to="/sign-up">Sign Up</Link>
-                        <Link to="/sign-in">Sign In</Link>
-                    </>
-                )
+            {!user && (
+                <>
+                    <Link to="/sign-up">Sign Up</Link>
+                    <Link to="/sign-in">Sign In</Link>
+                </>
+            )
             }
+            {user && user.role == 'Admin' && (<>
+                <Link to='/admin'>All Users</Link>
+                <button onClick={logout}>Sign Out</button>
+            </>)
+            }
+
         </nav>
     );
 }

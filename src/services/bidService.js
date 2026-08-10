@@ -1,9 +1,5 @@
 import api from "./api";
 
-// async function createBid(itemId, body) {
-//   const response = await api.post(`/bid/${itemId}/bids`, body);
-//   return response.data;
-// }
 async function createBid(itemId, body) {
   console.log("Creating bid:", {
     itemId,

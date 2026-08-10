@@ -21,7 +21,6 @@ import CreateItemPage from "./pages/items/CreateItemPage";
 import ItemDetailsPage from "./pages/items/ItemDetailsPage";
 import ItemsListPage from "./pages/items/ItemsListPage";
 import UpdateItemPage from "./pages/items/UpdateItemPage";
-import BiddingPage from "./pages/BiddingPage";
 
 function App() {
   // const { user } = useAuth()
@@ -67,14 +66,6 @@ function App() {
           element={
             <ProtectedRoute>
               <UpdateItemPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/items/:itemId/bid"
-          element={
-            <ProtectedRoute>
-              <BiddingPage />
             </ProtectedRoute>
           }
         />

@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { getAllItems } from '../../services/itemService';
-import { Link } from 'react-router';
-import '../../style/item-styles.css';
-
+import React, { useState, useEffect } from "react";
+import { getAllItems } from "../../services/itemService";
+import { Link } from "react-router";
+import "../../style/item-styles.css";
 
 function ItemsListPage() {
   const [endedItems, setEndedItems] = useState([]);
@@ -52,90 +51,37 @@ function ItemsListPage() {
 
   return (
     <>
-//       <h1>Now Open to Bid</h1>
+      <div>
+        <h1>Now Open to Bid</h1>
 
-//       {activeItems.length === 0 ? (
-//         <p>No active auctions available right now.</p>
-//       ) : (
-//         activeItems.map((item) => (
-//           <div key={item._id}>
-// //             {item.image && (
-//                     <img src={oneAItem.image.url} alt="item-img" />
+        <br />
 
-
-// function ItemsListPage() {
-
-//     const [endedItems, setEndedItems] = useState([]);
-//     const [activeItems, setActiveItems] = useState([]);
-
-//     useEffect(() => {
-
-//         async function loadItems() {
-
-//             try {
-
-//                 const response = await getAllItems();
-
-//                 const active = response.filter(
-//                     (item) => ["Active", "Starting Soon"].includes(item.status)
-//                 );
-
-//                 const ended = response.filter(
-//                     (item) => ["Ended", "Sold"].includes(item.status)
-//                 );
-
-//                 setActiveItems(active);
-//                 setEndedItems(ended);
-
-//             } catch (err) {
-
-//                 console.log(err);
-
-//             }
-//         }
-
-//         loadItems()
-
-//     }, [])
-
-
-//     return (
-//         <>
-
-            <h1>Now Open to Bid</h1>
-
-            <br />
-
-            {activeItems.map((oneAItem) =>
-                <div key={oneAItem._id}>
-                    <img src={oneAItem.image.url} alt="item-img" />
-                    <h2>{oneAItem.title}</h2>
-                    <Link state={{ item: oneAItem }} to={`/items/${oneAItem._id}`}>See Details</Link>
-                </div>
-            )}
-            <h2>{item.title}</h2>
-
-            {item.status === "Active" ? (
-              <Link
-                to={`/items/${item._id}/bid`}
-                state={{ item }}
-                className="Bid"
-              >
-                Start Bidding
-              </Link>
-            ) : (
-              <button disabled className="Bid-Dis">
-                Bidding Opens Soon
-              </button>
-            )}
-
-            <br />
-            <Link state={{ item }} to={`/items/${item._id}`}>
+        {activeItems.map((oneAItem) => (
+          <div key={oneAItem._id}>
+            <img src={oneAItem.image.url} alt="item-img" />
+            <h2>{oneAItem.title}</h2>
+            <Link state={{ item: oneAItem }} to={`/items/${oneAItem._id}`}>
               See Details
             </Link>
           </div>
-        ))
-      )}
+        ))}
+        <h2>{item.title}</h2>
+
+        {item.status === "Active" ? (
+          <Link to={`/items/${item._id}/bid`} state={{ item }} className="Bid">
+            Start Bidding
+          </Link>
+        ) : (
+          <button disabled className="Bid-Dis">
+            Bidding Opens Soon
+          </button>
+        )}
+
+        <br />
+        <Link state={{ item }} to={`/items/${item._id}`}>
+          See Details
+        </Link>
+      </div>
 
       <br />
       <br />

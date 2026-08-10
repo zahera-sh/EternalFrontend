@@ -1,30 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { getItemById } from "../../services/itemService";
+import { getItemById, FavItem, unFavItem } from "../../services/itemService";
+import { useAuth } from '../../context/AuthContext'
 
 
 function ItemDetailsPage() {
 
-    const [item, setItem] = useState(null)
-    const { itemId } = useParams()
+    const [item, setItem] = useState(null);
+    const { itemId } = useParams();
+    const { user } = useAuth();
+
+    async function loadItem() {
+
+        try {
+
+            const response = await getItemById(itemId);
+            setItem(response)
+
+        } catch (err) {
+
+            console.log(err);
+        }
+    }
 
     useEffect(() => {
 
-        async function loadItem() {
-
-            try {
-                const response = await getItemById(itemId)
-                setItem(response)
-
-            } catch (err) {
-
-                console.log(err)
-            }
-        }
-
         loadItem()
 
-    }, [])
+    }, [itemId]);
+
+    async function handleSubmitFav(event) {
+        event.preventDefault();
+        await FavItem(itemId);
+        await loadItem();
+    }
+
+    async function handleSubmitUnfav(event) {
+        event.preventDefault();
+        await unFavItem(itemId);
+        await loadItem();
+    }
 
 
     return (
@@ -51,6 +66,18 @@ function ItemDetailsPage() {
 
                         <p>Status: {item.status}</p>
                         <p>favourites: {item.favourites.length}</p>
+
+                        {user && item.favourites.some((oneId) => String(oneId) === String(user._id))
+
+                            ? (<button onClick={handleSubmitUnfav}>
+                                🤎 Unfavourite
+                            </button>
+                            )
+                            : (<button onClick={handleSubmitFav}>
+                                🩶 Favourite
+                            </button>
+                            )
+                        }
 
                     </>
                 )

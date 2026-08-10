@@ -1,38 +1,34 @@
 import { Link } from "react-router";
 import { useAuth } from "../context/AuthContext";
 
-
 function Navbar() {
+  const { logout, user } = useAuth();
+  console.log(user);
+  return (
+    <nav>
+      <Link to="/items">Items</Link>
 
-    const { logout, user } = useAuth();
+      {user && user.role === "User" && (
+        <>
+          <Link to="/items/create">Add Item</Link>
+          <button onClick={logout}>Sign Out</button>
+        </>
+      )}
 
-    return (
-        <nav>
-
-            <Link to="/items">Items</Link>
-
-            {user && user.role === 'User' &&
-                (<>
-                    <Link to="/items/create">Add Item</Link>
-                    <button onClick={logout}>Sign Out</button>
-                </>)}
-
-            {!user && (
-                <>
-                    <Link to="/sign-up">Sign Up</Link>
-                    <Link to="/sign-in">Sign In</Link>
-                </>
-            )
-            }
-            {user && user.role == 'Admin' && (<>
-                <Link to='/admin'>All Users</Link>
-                <button onClick={logout}>Sign Out</button>
-            </>)
-            }
-
-        </nav>
-    );
+      {!user && (
+        <>
+          <Link to="/sign-up">Sign Up</Link>
+          <Link to="/sign-in">Sign In</Link>
+        </>
+      )}
+      {user && user.role == "Admin" && (
+        <>
+          <Link to="/admin">All Users</Link>
+          <button onClick={logout}>Sign Out</button>
+        </>
+      )}
+    </nav>
+  );
 }
-
 
 export default Navbar;

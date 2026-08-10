@@ -53,59 +53,57 @@ function ItemsListPage() {
     <>
       <div>
         <h1>Now Open to Bid</h1>
-
         <br />
-
-        {activeItems.map((oneAItem) => (
-          <div key={oneAItem._id}>
-            <img src={oneAItem.image.url} alt="item-img" />
-            <h2>{oneAItem.title}</h2>
-            <Link state={{ item: oneAItem }} to={`/items/${oneAItem._id}`}>
-              See Details
-            </Link>
-          </div>
-        ))}
-        <h2>{item.title}</h2>
-
-        {item.status === "Active" ? (
-          <Link to={`/items/${item._id}/bid`} state={{ item }} className="Bid">
-            Start Bidding
-          </Link>
+        {activeItems.length === 0 ? (
+          <p>No active auctions available right now.</p>
         ) : (
-          <button disabled className="Bid-Dis">
-            Bidding Opens Soon
-          </button>
+          activeItems.map((item) => (
+            <div key={item._id}>
+              <img src={item.image.url} alt="item-img" />
+              <h2>{item.title}</h2>
+
+              {item.status === "Active" ? (
+                <Link
+                  to={`/items/${item._id}/bid`}
+                  state={{ item }}
+                  className="Bid"
+                >
+                  Start Bidding
+                </Link>
+              ) : (
+                <button disabled className="Bid-Dis">
+                  Bidding Opens Soon
+                </button>
+              )}
+
+              <br />
+              <Link state={{ item }} to={`/items/${item._id}`}>
+                See Details
+              </Link>
+            </div>
+          ))
         )}
-
-        <br />
-        <Link state={{ item }} to={`/items/${item._id}`}>
-          See Details
-        </Link>
+        <br /> <br />
+        <h1>Closed Auction</h1>
+        {endedItems.length === 0 ? (
+          <p>No closed auctions yet.</p>
+        ) : (
+          endedItems.map((item) => (
+            <div key={item._id}>
+              <h2>{item.title}</h2>
+              <p>
+                Highest Bid:{" "}
+                {item.currentPrice || item.latestBid
+                  ? `$${(item.currentPrice || item.latestBid).toLocaleString()}`
+                  : "No bids placed"}
+              </p>
+              <Link state={{ item }} to={`/items/${item._id}`}>
+                See Details
+              </Link>
+            </div>
+          ))
+        )}
       </div>
-
-      <br />
-      <br />
-
-      <h1>Closed Auction</h1>
-
-      {endedItems.length === 0 ? (
-        <p>No closed auctions yet.</p>
-      ) : (
-        endedItems.map((item) => (
-          <div key={item._id}>
-            <h2>{item.title}</h2>
-            <p>
-              Highest Bid:{" "}
-              {item.currentPrice || item.latestBid
-                ? `$${(item.currentPrice || item.latestBid).toLocaleString()}`
-                : "No bids placed"}
-            </p>
-            <Link state={{ item }} to={`/items/${item._id}`}>
-              See Details
-            </Link>
-          </div>
-        ))
-      )}
     </>
   );
 }

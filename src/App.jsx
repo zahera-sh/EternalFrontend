@@ -1,8 +1,6 @@
 import { Route, Routes } from "react-router";
-import ProtectedRoute from "./components/ProtectedRoute";
 // imports
 import { useState, useEffect } from "react";
-import { Route, Routes } from "react-router";
 
 // services
 import { getCurrentUser, logout } from "./services/authService";
@@ -54,7 +52,16 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
-
+        <Route path="/items" element={<ItemsListPage />} />
+        <Route path="/items/:itemId" element={<ItemDetailsPage />} />
+        <Route
+          path="/items/create"
+          element={
+            <ProtectedRoute>
+              <CreateItemPage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/items/edit/:itemId"
           element={

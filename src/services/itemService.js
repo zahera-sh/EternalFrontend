@@ -12,6 +12,11 @@ async function getAllItems() {
     return response.data
 }
 
+async function filterItems(query) {
+    const response = await api.get("/items/filter", { params: query })
+    return response.data
+}
+
 async function getItemById(itemId) {
     const response = await api.get(`/items/${itemId}`);
     return response.data
@@ -33,6 +38,7 @@ export {
     getAllItems,
     getItemById,
     FavItem,
-    unFavItem
+    unFavItem,
+    filterItems
 }
 

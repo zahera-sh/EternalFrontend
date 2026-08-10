@@ -28,7 +28,7 @@ const SignInForm = ({ }) => {
         try {
 
             const signedInUser = await signIn(formData);
-
+console.log(signedInUser)
             setUser(signedInUser);
             navigate("/dashboard");
 

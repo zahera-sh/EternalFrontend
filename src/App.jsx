@@ -1,3 +1,5 @@
+import { Route, Routes } from "react-router";
+import ProtectedRoute from "./components/ProtectedRoute";
 // imports
 import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router";
@@ -21,7 +23,7 @@ import CreateItemPage from "./pages/items/CreateItemPage";
 import ItemDetailsPage from "./pages/items/ItemDetailsPage";
 import ItemsListPage from "./pages/items/ItemsListPage";
 import UpdateItemPage from "./pages/items/UpdateItemPage";
-
+import BiddingPage from "./pages/BiddingPage";
 
 function App() {
     // const { user } = useAuth()
@@ -39,11 +41,26 @@ function App() {
                 <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                 <Route path='/admin' element={<ProtectedRoute><IsAdmin><Admin /></IsAdmin></ProtectedRoute>}></Route>
 
-                <Route path="/items" element={<ItemsListPage />} />
-                <Route path="/items/:itemId" element={<ItemDetailsPage />} />
-                <Route path="/items/create" element={<ProtectedRoute><CreateItemPage /></ProtectedRoute>} />
-                <Route path="/items/edit/:itemId" element={<ProtectedRoute><UpdateItemPage /></ProtectedRoute>} />
+        <Route
+          path="/items/edit/:itemId"
+          element={
+            <ProtectedRoute>
+              <UpdateItemPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/items/:itemId/bid"
+          element={
+            <ProtectedRoute>
+              <BiddingPage />
+            </ProtectedRoute>
+          }
+        />
 
+      </Routes>
+    </div>
+  );
             </Routes>
 
         </div>

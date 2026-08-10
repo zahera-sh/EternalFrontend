@@ -3,44 +3,104 @@ import { getAllItems } from '../../services/itemService';
 import { Link } from 'react-router';
 import '../../style/item-styles.css';
 
+
 function ItemsListPage() {
+  const [endedItems, setEndedItems] = useState([]);
+  const [activeItems, setActiveItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    const [endedItems, setEndedItems] = useState([]);
-    const [activeItems, setActiveItems] = useState([]);
+  useEffect(() => {
+    async function loadItems() {
+      try {
+        setLoading(true);
+        const response = await getAllItems();
 
-    useEffect(() => {
+        // Safely extract array regardless of API response structure
+        const itemsArray = Array.isArray(response)
+          ? response
+          : response?.data || [];
 
-        async function loadItems() {
+        const active = itemsArray.filter((item) =>
+          ["Active", "Starting Soon"].includes(item.status),
+        );
 
-            try {
+        const ended = itemsArray.filter((item) =>
+          ["Ended", "Sold"].includes(item.status),
+        );
 
-                const response = await getAllItems();
+        setActiveItems(active);
+        setEndedItems(ended);
+      } catch (err) {
+        console.error("Failed to load items:", err);
+        setError("Failed to load auction items. Please refresh.");
+      } finally {
+        setLoading(false);
+      }
+    }
 
-                const active = response.filter(
-                    (item) => ["Active", "Starting Soon"].includes(item.status)
-                );
+    loadItems();
+  }, []);
 
-                const ended = response.filter(
-                    (item) => ["Ended", "Sold"].includes(item.status)
-                );
+  if (loading) {
+    return <div className="loading">Loading items...</div>;
+  }
 
-                setActiveItems(active);
-                setEndedItems(ended);
+  if (error) {
+    return <div className="err">{error}</div>;
+  }
 
-            } catch (err) {
+  return (
+    <>
+//       <h1>Now Open to Bid</h1>
 
-                console.log(err);
+//       {activeItems.length === 0 ? (
+//         <p>No active auctions available right now.</p>
+//       ) : (
+//         activeItems.map((item) => (
+//           <div key={item._id}>
+// //             {item.image && (
+//                     <img src={oneAItem.image.url} alt="item-img" />
 
-            }
-        }
 
-        loadItems()
+// function ItemsListPage() {
 
-    }, [])
+//     const [endedItems, setEndedItems] = useState([]);
+//     const [activeItems, setActiveItems] = useState([]);
+
+//     useEffect(() => {
+
+//         async function loadItems() {
+
+//             try {
+
+//                 const response = await getAllItems();
+
+//                 const active = response.filter(
+//                     (item) => ["Active", "Starting Soon"].includes(item.status)
+//                 );
+
+//                 const ended = response.filter(
+//                     (item) => ["Ended", "Sold"].includes(item.status)
+//                 );
+
+//                 setActiveItems(active);
+//                 setEndedItems(ended);
+
+//             } catch (err) {
+
+//                 console.log(err);
+
+//             }
+//         }
+
+//         loadItems()
+
+//     }, [])
 
 
-    return (
-        <>
+//     return (
+//         <>
 
             <h1>Now Open to Bid</h1>
 
@@ -53,24 +113,55 @@ function ItemsListPage() {
                     <Link state={{ item: oneAItem }} to={`/items/${oneAItem._id}`}>See Details</Link>
                 </div>
             )}
+            <h2>{item.title}</h2>
 
-            <br />
-            <br />
-
-            <h1>Closed Auction</h1>
-
-            <br />
-
-            {endedItems.map((oneEItem) =>
-                <div key={oneEItem._id}>
-                    <h2>{oneEItem.title}</h2>
-                    <p>Highest Bid: {oneEItem.latestBid}</p>
-                    <Link state={{ item: oneEItem }} to={`/items/${oneEItem._id}`}>See Details</Link>
-                </div>
+            {item.status === "Active" ? (
+              <Link
+                to={`/items/${item._id}/bid`}
+                state={{ item }}
+                className="Bid"
+              >
+                Start Bidding
+              </Link>
+            ) : (
+              <button disabled className="Bid-Dis">
+                Bidding Opens Soon
+              </button>
             )}
 
-        </>
-    );
+            <br />
+            <Link state={{ item }} to={`/items/${item._id}`}>
+              See Details
+            </Link>
+          </div>
+        ))
+      )}
+
+      <br />
+      <br />
+
+      <h1>Closed Auction</h1>
+
+      {endedItems.length === 0 ? (
+        <p>No closed auctions yet.</p>
+      ) : (
+        endedItems.map((item) => (
+          <div key={item._id}>
+            <h2>{item.title}</h2>
+            <p>
+              Highest Bid:{" "}
+              {item.currentPrice || item.latestBid
+                ? `$${(item.currentPrice || item.latestBid).toLocaleString()}`
+                : "No bids placed"}
+            </p>
+            <Link state={{ item }} to={`/items/${item._id}`}>
+              See Details
+            </Link>
+          </div>
+        ))
+      )}
+    </>
+  );
 }
 
 export default ItemsListPage;

@@ -1,12 +1,25 @@
 import api from "./api";
 
+// async function createBid(itemId, body) {
+//   const response = await api.post(`/bid/${itemId}/bids`, body);
+//   return response.data;
+// }
 async function createBid(itemId, body) {
-  const response = await api.post(`/items/${itemId}/bids`, body);
-  return response.data;
-}
+  console.log("Creating bid:", {
+    itemId,
+    body,
+  });
 
+  try {
+    const response = await api.post(`/bid/${itemId}/bids`, body);
+    return response.data;
+  } catch (error) {
+    console.error("CREATE BID ERROR:", error.response?.data);
+    throw error;
+  }
+}
 async function getBidsByItem(itemId) {
-  const response = await api.get(`/items/${itemId}/bids`);
+  const response = await api.get(`/bid/${itemId}/bids`);
   return response.data;
 }
 

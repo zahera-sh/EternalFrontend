@@ -62,20 +62,6 @@ function ItemsListPage() {
               <img src={item.image.url} alt="item-img" />
               <h2>{item.title}</h2>
 
-              {item.status === "Active" ? (
-                <Link
-                  to={`/items/${item._id}/bid`}
-                  state={{ item }}
-                  className="Bid"
-                >
-                  Start Bidding
-                </Link>
-              ) : (
-                <button disabled className="Bid-Dis">
-                  Bidding Opens Soon
-                </button>
-              )}
-
               <br />
               <Link state={{ item }} to={`/items/${item._id}`}>
                 See Details

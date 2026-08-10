@@ -17,9 +17,22 @@ async function getItemById(itemId) {
     return response.data
 }
 
+async function FavItem(itemId, body) {
+    const response = await api.post(`/items/${itemId}/like`, body);
+    return response.data
+}
+
+async function unFavItem(itemId, body) {
+    const response = await api.post(`/items/${itemId}/dislike`, body);
+    return response.data
+}
+
+
 export {
     createItem,
     getAllItems,
     getItemById,
+    FavItem,
+    unFavItem
 }
 

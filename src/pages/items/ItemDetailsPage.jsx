@@ -239,9 +239,9 @@ function ItemDetailsPage() {
       ) : (
         <p>Loading....</p>
       )}
-      
+
       {/* Bidding Section */}
-      {item.owner._id !== user?._id && (
+      {item.owner._id !== user?._id && !["Ended", "Starting Soon"].includes(item.status) && (
         <section className="bidding-section">
           <h2>Start Bidding</h2>
 

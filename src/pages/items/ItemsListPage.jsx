@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { getAllItems, filterItems } from "../../services/itemService";
 import { Link } from "react-router";
 import "../../style/item-styles.css";
+import { useAuth } from "../../context/AuthContext";
 
 function ItemsListPage() {
+  const { user } = useAuth()
   const [endedItems, setEndedItems] = useState([]);
   const [activeItems, setActiveItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,19 +21,16 @@ function ItemsListPage() {
         setLoading(true);
         const response = await getAllItems();
 
-        // Safely extract array regardless of API response structure
         const itemsArray = Array.isArray(response)
           ? response
           : response?.data || [];
 
         const active = itemsArray.filter((item) =>
-          ["Active", "Starting Soon"].includes(item.status),
-        );
+          ["Active", "Starting Soon"].includes(item.status) )
 
         const ended = itemsArray.filter((item) =>
-          ["Ended", "Sold"].includes(item.status),
-        );
-
+            ["Ended", "Sold"].includes(item.status)
+          );
         setActiveItems(active);
         setEndedItems(ended);
       } catch (err) {
@@ -102,6 +101,7 @@ function ItemsListPage() {
 
         </div>
         <br />
+
         {filteredItems !== null ? (
           <>
             <h1>Filter Results</h1>
@@ -130,7 +130,7 @@ function ItemsListPage() {
             {activeItems.length === 0 ? (
               <p>No active auctions available right now.</p>
             ) : (
-              activeItems.map((item) => (
+              activeItems.filter((item) => item.owner._id !== user?._id).map((item) => (
                 <div key={item._id}>
                   <img src={item.image.url} alt="item-img" />
                   <h2>{item.title}</h2>
@@ -147,7 +147,7 @@ function ItemsListPage() {
             {endedItems.length === 0 ? (
               <p>No closed auctions yet.</p>
             ) : (
-              endedItems.map((item) => (
+              endedItems.filter((item) => item.owner._id !== user?._id).map((item) => (
                 <div key={item._id}>
                   <h2>{item.title}</h2>
                   <p>
@@ -167,41 +167,6 @@ function ItemsListPage() {
             )}
           </>
         )}
-        {/* {activeItems.length === 0 ? (
-          <p>No active auctions available right now.</p>
-        ) : (
-          activeItems.map((item) => (
-            <div key={item._id}>
-              <img src={item.image.url} alt="item-img" />
-              <h2>{item.title}</h2>
-
-              <br />
-              <Link state={{ item }} to={`/items/${item._id}`}>
-                See Details
-              </Link>
-            </div>
-          ))
-        )}
-        <br /> <br />
-        <h1>Closed Auction</h1>
-        {endedItems.length === 0 ? (
-          <p>No closed auctions yet.</p>
-        ) : (
-          endedItems.map((item) => (
-            <div key={item._id}>
-              <h2>{item.title}</h2>
-              <p>
-                Highest Bid:{" "}
-                {item.currentPrice || item.latestBid
-                  ? `$${(item.currentPrice || item.latestBid).toLocaleString()}`
-                  : "No bids placed"}
-              </p>
-              <Link state={{ item }} to={`/items/${item._id}`}>
-                See Details
-              </Link>
-            </div>
-          ))
-        )} */}
       </div>
     </>
   );

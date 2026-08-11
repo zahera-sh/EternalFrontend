@@ -21,6 +21,8 @@ import CreateItemPage from "./pages/items/CreateItemPage";
 import ItemDetailsPage from "./pages/items/ItemDetailsPage";
 import ItemsListPage from "./pages/items/ItemsListPage";
 import UpdateItemPage from "./pages/items/UpdateItemPage";
+import NotFoundPage from "./pages/NotFoundPage";
+
 
 function App() {
   // const { user } = useAuth()
@@ -34,7 +36,7 @@ function App() {
         <Route path="/sign-up" element={<SignupPage />} />
         <Route path="/sign-in" element={<SignInPage />} />
         <Route
-          path="/user/dashboard"
+          path="/dashboard"
           element={
             <ProtectedRoute>
               <Dashboard />
@@ -69,6 +71,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>
   );

@@ -7,6 +7,61 @@ import { createBid, getBidsByItem } from "../../services/bidService";
 
 const SOCKET_URL = "http://localhost:3000";
 
+function AuctionCountdown({ endDate }) {
+  const [timeLeft, setTimeLeft] = useState(() => calculateTimeLeft());
+
+  function calculateTimeLeft() {
+    if (!endDate) return null;
+
+    const endMs = new Date(endDate).getTime();
+    if (isNaN(endMs)) return null;
+
+    const difference = endMs - Date.now();
+
+    if (difference <= 0) {
+      return null;
+    }
+
+    return {
+      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((difference / 1000 / 60) % 60),
+      seconds: Math.floor((difference / 1000) % 60),
+    };
+  }
+
+  useEffect(() => {
+    setTimeLeft(calculateTimeLeft());
+
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [endDate]);
+
+  if (!timeLeft) {
+    return (
+      <span style={{ color: "red", fontWeight: "bold" }}>Auction Ended</span>
+    );
+  }
+
+  if (timeLeft.days > 0) {
+    return (
+      <span>
+        {timeLeft.days} {timeLeft.days === 1 ? "day" : "days"} left
+      </span>
+    );
+  }
+
+  return (
+    <span>
+      {String(timeLeft.hours).padStart(2, "0")}:
+      {String(timeLeft.minutes).padStart(2, "0")}:
+      {String(timeLeft.seconds).padStart(2, "0")}
+    </span>
+  );
+}
 function ItemDetailsPage() {
   const [item, setItem] = useState(null);
   const { itemId } = useParams();
@@ -22,7 +77,55 @@ function ItemDetailsPage() {
   const [error, setError] = useState(null);
 
   const MIN_INCREMENT = 100;
+  function AuctionCountdown({ endDate }) {
+    const [timeLeft, setTimeLeft] = useState(() => calculateTimeLeft());
 
+    function calculateTimeLeft() {
+      if (!endDate) return null;
+      const difference = +new Date(endDate) - +new Date();
+
+      if (difference <= 0) {
+        return null;
+      }
+
+      return {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    }
+
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setTimeLeft(calculateTimeLeft());
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }, [endDate]);
+
+    if (!timeLeft) {
+      return (
+        <span style={{ color: "red", fontWeight: "bold" }}>Auction Ended</span>
+      );
+    }
+
+    if (timeLeft.days > 0) {
+      return (
+        <span>
+          {timeLeft.days} {timeLeft.days === 1 ? "day" : "days"} left
+        </span>
+      );
+    }
+
+    return (
+      <span>
+        {String(timeLeft.hours).padStart(2, "0")}:
+        {String(timeLeft.minutes).padStart(2, "0")}:
+        {String(timeLeft.seconds).padStart(2, "0")}
+      </span>
+    );
+  }
   async function loadItem() {
     try {
       setLoadingItem(true);
@@ -77,8 +180,8 @@ function ItemDetailsPage() {
         );
         const updatedList = exists
           ? prevBids.map((b) =>
-            String(b._id) === String(newBid._id) ? newBid : b,
-          )
+              String(b._id) === String(newBid._id) ? newBid : b,
+            )
           : [newBid, ...prevBids];
         // Ensure highest bid is always updated to the highest value
         const topBid = [...updatedList].sort(
@@ -121,8 +224,8 @@ function ItemDetailsPage() {
     if (!amount || amount < minRequiredBid) {
       const message = highestBid
         ? `Your bid must be at least $${MIN_INCREMENT} higher than $${Number(
-          highestBid.amount,
-        ).toLocaleString()}. Minimum: $${minRequiredBid.toLocaleString()}.`
+            highestBid.amount,
+          ).toLocaleString()}. Minimum: $${minRequiredBid.toLocaleString()}.`
         : `Your bid must be at least $${minRequiredBid.toLocaleString()}.`;
 
       setError(message);
@@ -220,7 +323,10 @@ function ItemDetailsPage() {
           <p>
             <strong>Ends by:</strong> {formatDate(item.auctionEnd)}
           </p>
-
+          <p>
+            <strong>Time Remaining:</strong>{" "}
+            <AuctionCountdown endDate={item.auctionEnd} />
+          </p>
           <p>
             <strong>Status:</strong> {item.status}
           </p>
@@ -228,9 +334,9 @@ function ItemDetailsPage() {
           <p>favourites: {item.favourites.length}</p>
 
           {user &&
-            item.favourites.some(
-              (oneId) => String(oneId) === String(user._id),
-            ) ? (
+          item.favourites.some(
+            (oneId) => String(oneId) === String(user._id),
+          ) ? (
             <button onClick={handleSubmitUnfav}>🤎 Unfavourite</button>
           ) : (
             <button onClick={handleSubmitFav}>🩶 Favourite</button>
@@ -241,99 +347,102 @@ function ItemDetailsPage() {
       )}
 
       {/* Bidding Section */}
-      {item.owner._id !== user?._id && !["Ended", "Starting Soon"].includes(item.status) && (
-        <section className="bidding-section">
-          <h2>Start Bidding</h2>
+      {item.owner._id !== user?._id &&
+        !["Ended", "Starting Soon"].includes(item.status) && (
+          <section className="bidding-section">
+            <h2>Start Bidding</h2>
 
-          <div className="display">
-            <span className="highest-bid">Current Highest Bid</span>
-            <div className="bid">
-              {loadingBid ? (
-                <span>Loading...</span>
-              ) : highestBid ? (
-                `$${Number(highestBid.amount).toLocaleString()}`
-              ) : (
-                <span className="no-bid">No bids yet</span>
-              )}
-            </div>
-          </div>
-
-          {error && <div className="err">{error}</div>}
-
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="bidAmount">
-                {isAutoBid ? "Starting Bid Amount ($)" : "Your Bid Amount ($)"}
-              </label>
-              <input
-                id="bidAmount"
-                type="number"
-                min={minRequiredBid}
-                step="1"
-                value={bidAmount}
-                onChange={(event) => setBidAmount(event.target.value)}
-                placeholder={`Minimum bid: $${minRequiredBid.toLocaleString()}`}
-                disabled={submitting || loadingBid}
-                required
-              />
+            <div className="display">
+              <span className="highest-bid">Current Highest Bid</span>
+              <div className="bid">
+                {loadingBid ? (
+                  <span>Loading...</span>
+                ) : highestBid ? (
+                  `$${Number(highestBid.amount).toLocaleString()}`
+                ) : (
+                  <span className="no-bid">No bids yet</span>
+                )}
+              </div>
             </div>
 
-            <div>
-              <input
-                type="checkbox"
-                id="isAutoBid"
-                checked={isAutoBid}
-                onChange={(e) => setIsAutoBid(e.target.checked)}
-                disabled={submitting || loadingBid}
-              />
-              <label htmlFor="isAutoBid">Enable Auto-Bidding</label>
-            </div>
+            {error && <div className="err">{error}</div>}
 
-            {isAutoBid && (
+            <form onSubmit={handleSubmit}>
               <div>
-                <label htmlFor="maxBidLimit">Maximum Bid Limit ($)</label>
+                <label htmlFor="bidAmount">
+                  {isAutoBid
+                    ? "Starting Bid Amount ($)"
+                    : "Your Bid Amount ($)"}
+                </label>
                 <input
-                  id="maxBidLimit"
+                  id="bidAmount"
                   type="number"
-                  min={bidAmount || minRequiredBid}
+                  min={minRequiredBid}
                   step="1"
-                  value={maxBidLimit}
-                  onChange={(event) => setMaxBidLimit(event.target.value)}
-                  placeholder="Enter maximum bid limit"
+                  value={bidAmount}
+                  onChange={(event) => setBidAmount(event.target.value)}
+                  placeholder={`Minimum bid: $${minRequiredBid.toLocaleString()}`}
                   disabled={submitting || loadingBid}
-                  required={isAutoBid}
+                  required
                 />
               </div>
-            )}
 
-            <button type="submit" disabled={submitting || loadingBid}>
-              {submitting
-                ? "Submitting Bid..."
-                : isAutoBid
-                  ? "Set Auto-Bid"
-                  : "Place Bid"}
-            </button>
-          </form>
+              <div>
+                <input
+                  type="checkbox"
+                  id="isAutoBid"
+                  checked={isAutoBid}
+                  onChange={(e) => setIsAutoBid(e.target.checked)}
+                  disabled={submitting || loadingBid}
+                />
+                <label htmlFor="isAutoBid">Enable Auto-Bidding</label>
+              </div>
 
-          {/* Live Bids History */}
-          <div>
-            <h3>Live Bids History</h3>
-            {bids.length === 0 ? (
-              <p>No bids placed yet.</p>
-            ) : (
-              <ul>
-                {bids.map((bid, index) => (
-                  <li key={bid._id || index}>
-                    <strong>${Number(bid.amount).toLocaleString()}</strong> by{" "}
-                    {getBidderName(bid.bidder)}{" "}
-                    {bid.isAutoBid && <em>(Auto Bid)</em>}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </section>
-      )}
+              {isAutoBid && (
+                <div>
+                  <label htmlFor="maxBidLimit">Maximum Bid Limit ($)</label>
+                  <input
+                    id="maxBidLimit"
+                    type="number"
+                    min={bidAmount || minRequiredBid}
+                    step="1"
+                    value={maxBidLimit}
+                    onChange={(event) => setMaxBidLimit(event.target.value)}
+                    placeholder="Enter maximum bid limit"
+                    disabled={submitting || loadingBid}
+                    required={isAutoBid}
+                  />
+                </div>
+              )}
+
+              <button type="submit" disabled={submitting || loadingBid}>
+                {submitting
+                  ? "Submitting Bid..."
+                  : isAutoBid
+                    ? "Set Auto-Bid"
+                    : "Place Bid"}
+              </button>
+            </form>
+
+            {/* Live Bids History */}
+            <div>
+              <h3>Live Bids History</h3>
+              {bids.length === 0 ? (
+                <p>No bids placed yet.</p>
+              ) : (
+                <ul>
+                  {bids.map((bid, index) => (
+                    <li key={bid._id || index}>
+                      <strong>${Number(bid.amount).toLocaleString()}</strong> by{" "}
+                      {getBidderName(bid.bidder)}{" "}
+                      {bid.isAutoBid && <em>(Auto Bid)</em>}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </section>
+        )}
     </>
   );
 }

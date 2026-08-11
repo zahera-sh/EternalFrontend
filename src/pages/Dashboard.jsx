@@ -1,6 +1,7 @@
 import { useAuth } from "../context/AuthContext";
 import React, { useEffect, useState } from "react";
 import { getAllProfile } from "../services/userService";
+import { Link } from "react-router";
 
 
 function Dashboard({ }) {
@@ -85,7 +86,7 @@ function Dashboard({ }) {
                             {myItems.map((item) => (
                                 <div key={item._id}>
                                     <img src={item.image.url} alt={item.title} />
-                                    <h3>{item.title}</h3>
+                                    <Link to={`/items/${item._id}`}><h3>{item.title}</h3></Link>
                                     <p> Starting Price: {item.startingPrice}</p>
                                     <p>Status: {item.status}</p>
                                 </div>
@@ -106,7 +107,7 @@ function Dashboard({ }) {
                             {favouritedItems.map((item) => (
                                 <div key={item._id}>
                                     <img src={item.image.url} alt={item.title} />
-                                    <h3>{item.title}</h3>
+                                    <Link to={`/items/${item._id}`}><h3>{item.title}</h3></Link>
                                     <p>Starting Price: {item.startingPrice}</p>
                                     <p>Status: {item.status}</p>
                                 </div>
@@ -126,7 +127,7 @@ function Dashboard({ }) {
                         <div>
                             {myBids.map((bid) => (
                                 <div key={bid._id}>
-                                    <h3>{bid.item?.title}</h3>
+                                    <Link to={`/items/${bid.item?._id}`}><h3>{bid.item?.title}</h3></Link>
                                     {bid.item?.image?.url &&
                                         (<img src={bid.item.image.url} alt={bid.item.title} />)}
 

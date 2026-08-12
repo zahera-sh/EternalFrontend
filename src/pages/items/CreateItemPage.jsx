@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { createItem } from '../../services/itemService';
-
+import '../../style/create.css'
 
 function CreateItemPage() {
     document.title = `Eternal | List Your Item`
@@ -50,105 +50,183 @@ function CreateItemPage() {
 
     }
 
-
     return (
-        <>
+        <main className="add-item-page">
 
-            <h1>Add a New Item</h1>
+            <section className="add-item-card">
 
-            <br />
-            <br />
+                <div className="add-item-heading">
+                    <p className="add-item-eyebrow">ETERNAL COLLECTION</p>
 
-            <form onSubmit={handleSubmit}>
+                    <h1>Add a New Item</h1>
 
-                <label htmlFor="title">Title:</label>
-                <input type="text"
-                    name='title'
-                    id='title'
-                    onChange={handleChange}
-                    value={formData.title} />
+                    <p>
+                        Present a piece worthy of being preserved beyond time.
+                    </p>
+                </div>
 
-                <br />
 
-                <label htmlFor="description">Description:</label>
-                <textarea type="text"
-                    name='description'
-                    id='description'
-                    onChange={handleChange}
-                    value={formData.description} />
+                <form
+                    className="add-item-form"
+                    onSubmit={handleSubmit}
+                >
 
-                <br />
+                    <div className="add-item-group">
+                        <label htmlFor="title">Title:</label>
 
-                {/* <label htmlFor="image">Add Photo</label>
-                <input type="file"
-                    name="image"
-                    id="image"
-                    accept="image/*"
-                    onChange={handleChange}
-                /> */}
-                <label htmlFor="image">Add Photo</label>
-                <input
-                    type="file"
-                    name="image"
-                    id="image"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                />
+                        <input
+                            type="text"
+                            name="title"
+                            id="title"
+                            onChange={handleChange}
+                            value={formData.title}
+                        />
+                    </div>
 
-                {imageError && <p>{imageError}</p>}
 
-                <br />
+                    <div className="add-item-group">
+                        <label htmlFor="description">
+                            Description:
+                        </label>
 
-                <label htmlFor="category">Category:</label>
-                <select
-                    name='category'
-                    id='category'
-                    onChange={handleChange}
-                    value={formData.category}
-                    required >
+                        <textarea
+                            name="description"
+                            id="description"
+                            onChange={handleChange}
+                            value={formData.description}
+                        />
+                    </div>
 
-                    <option value="" disabled>Select Category</option>
-                    <option value="Watches">Watches</option>
-                    <option value="Jewelry">Jewelry</option>
-                    <option value="Art">Art</option>
-                    <option value="Bags">Bags</option>
-                    <option value="Coins">Coins</option>
-                    <option value="Collectibles">Collectibles</option>
 
-                </select>
+                    <div className="add-item-group">
+                        <label htmlFor="image">Add Photo</label>
 
-                <br />
+                        <input
+                            type="file"
+                            name="image"
+                            id="image"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                        />
 
-                <label htmlFor="startingPrice">Starting Price:</label>
-                <input type="number"
-                    name='startingPrice'
-                    id='startingPrice'
-                    onChange={handleChange}
-                    value={formData.startingPrice} />
+                        {imageError && (
+                            <p className="image-error">
+                                {imageError}
+                            </p>
+                        )}
+                    </div>
 
-                <br />
 
-                <label htmlFor="auctionStart">Start Date:</label>
-                <input type="date"
-                    name='auctionStart'
-                    id='auctionStart'
-                    onChange={handleChange}
-                    value={formData.auctionStart} />
+                    <div className="add-item-group">
+                        <label htmlFor="category">
+                            Category:
+                        </label>
 
-                <br />
+                        <select
+                            name="category"
+                            id="category"
+                            onChange={handleChange}
+                            value={formData.category}
+                            required
+                        >
+                            <option value="" disabled>
+                                Select Category
+                            </option>
 
-                <label htmlFor="auctionEnd">End Date:</label>
-                <input type="date"
-                    name='auctionEnd'
-                    id='auctionEnd'
-                    onChange={handleChange}
-                    value={formData.auctionEnd} />
-                <br />
-                <button>Submit</button>
+                            <option value="Watches">
+                                Watches
+                            </option>
 
-            </form >
+                            <option value="Jewelry">
+                                Jewelry
+                            </option>
 
-        </>
+                            <option value="Art">
+                                Art
+                            </option>
+
+                            <option value="Bags">
+                                Bags
+                            </option>
+
+                            <option value="Coins">
+                                Coins
+                            </option>
+
+                            <option value="Collectibles">
+                                Collectibles
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <div className="add-item-group">
+                        <label htmlFor="startingPrice">
+                            Starting Price:
+                        </label>
+
+                        <input
+                            type="number"
+                            name="startingPrice"
+                            id="startingPrice"
+                            step="100"
+                            min='100'
+                            onChange={handleChange}
+                            value={formData.startingPrice}
+                        />
+                    </div>
+
+
+                    <div className="auction-dates">
+
+                        <div className="add-item-group">
+                            <label htmlFor="auctionStart">
+                                Start Date:
+                            </label>
+
+                            <input
+                                type="date"
+                                name="auctionStart"
+                                id="auctionStart"
+                                onChange={handleChange}
+                                value={formData.auctionStart}
+                            />
+                        </div>
+
+
+                        <div className="add-item-group">
+                            <label htmlFor="auctionEnd">
+                                End Date:
+                            </label>
+
+                            <input
+                                type="date"
+                                name="auctionEnd"
+                                id="auctionEnd"
+                                onChange={handleChange}
+                                value={formData.auctionEnd}
+                            />
+                        </div>
+
+                    </div>
+
+
+                    <div className="add-item-actions">
+
+                        <button
+                            className="add-item-button"
+                            type="submit"
+                        >
+                            Submit
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </main>
     );
 }
 

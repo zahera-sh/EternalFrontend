@@ -32,11 +32,11 @@ function Dashboard() {
     }
 
     if (error) {
-        return <p className="dashboard-message">{error}</p>;
+        return <p className="err">{error}</p>;
     }
 
     if (!dashboard) {
-        return <p className="dashboard-message">Loading...</p>;
+        return <p className="loading">Loading...</p>;
     }
 
     const {
@@ -45,7 +45,6 @@ function Dashboard() {
         favouritedItems,
         myBids,
     } = dashboard;
-    console.log(myBids)
     return (
         <main className="dashboard-page">
 

@@ -4,7 +4,7 @@ import { createItem } from '../../services/itemService';
 
 
 function CreateItemPage() {
-
+    document.title = `Eternal | List Your Item`
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -14,6 +14,21 @@ function CreateItemPage() {
         auctionStart: "",
         auctionEnd: ""
     });
+    const [imageError, setImageError] = useState("");
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+
+        if (file && file.size > 5 * 1024 * 1024) {
+            setImageError("Image size must be 5 MB or less.");
+            e.target.value = "";
+            return;
+        }
+
+        setImageError("");
+        handleChange(e);
+    };
+
 
     const navigate = useNavigate();
 
@@ -64,13 +79,23 @@ function CreateItemPage() {
 
                 <br />
 
-                <label htmlFor="image">Add Photo</label>
+                {/* <label htmlFor="image">Add Photo</label>
                 <input type="file"
                     name="image"
                     id="image"
                     accept="image/*"
                     onChange={handleChange}
+                /> */}
+                <label htmlFor="image">Add Photo</label>
+                <input
+                    type="file"
+                    name="image"
+                    id="image"
+                    accept="image/*"
+                    onChange={handleImageChange}
                 />
+
+                {imageError && <p>{imageError}</p>}
 
                 <br />
 

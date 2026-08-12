@@ -5,6 +5,8 @@ import { getAllItems } from "../services/itemService";
 import "../style/homepage.css";
 
 function Homepage() {
+    document.title = "Eternal | Home"
+
     const [featuredItems, setFeaturedItems] = useState([]);
 
     useEffect(() => {

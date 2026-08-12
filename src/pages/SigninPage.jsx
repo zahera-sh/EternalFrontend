@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import "../style/auth.css";
 
 const SignInForm = () => {
+    document.title = "Eternal | Welcome Back!"
 
     const { setUser } = useAuth();
     const navigate = useNavigate();
@@ -32,12 +33,15 @@ const SignInForm = () => {
         try {
 
             const signedInUser = await signIn(formData);
-
-            console.log(signedInUser);
-
             setUser(signedInUser);
 
-            navigate("/dashboard");
+            if (signedInUser.role === 'User') {
+                navigate("/dashboard");
+            }
+            if (signedInUser.role === 'Admin') {
+                navigate("/admin");
+            }
+
 
         } catch (err) {
 

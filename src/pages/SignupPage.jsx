@@ -5,6 +5,7 @@ import { signUp } from "../services/authService";
 import "../style/auth.css";
 
 function Signup() {
+    document.title = "Eternal | Join Us"
 
     const navigate = useNavigate();
 

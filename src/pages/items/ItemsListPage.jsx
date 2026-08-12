@@ -73,7 +73,7 @@ function ItemsListPage() {
 
   return (
     <>
-      <div>
+      <div className="container">
         <div>
           <input
             type="text"

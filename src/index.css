@@ -1,7 +1,16 @@
-.error{
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600&display=swap');
+
+
+body {
+    margin: 0;
+    font-weight: 900;
+    font-family: "Cormorant Garamond", serif;
+}
+
+.error {
     color: red
 }
 
-nav a{
+nav a {
     margin-right: 10px
 }

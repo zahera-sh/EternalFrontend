@@ -20,7 +20,6 @@ import Admin from "./pages/Admin";
 import CreateItemPage from "./pages/items/CreateItemPage";
 import ItemDetailsPage from "./pages/items/ItemDetailsPage";
 import ItemsListPage from "./pages/items/ItemsListPage";
-import UpdateItemPage from "./pages/items/UpdateItemPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 
@@ -63,14 +62,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/items/edit/:itemId"
-          element={
-            <ProtectedRoute>
-              <UpdateItemPage />
-            </ProtectedRoute>
-          }
-        />
+
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

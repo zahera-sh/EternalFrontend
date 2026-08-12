@@ -7,10 +7,18 @@ body {
     font-family: "Cormorant Garamond", serif;
 }
 
-.error {
-    color: red
+.loading,
+.err {
+    min-height: 60vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
 }
 
-nav a {
-    margin-right: 10px
+.err {
+    color: #8b4d45;
 }

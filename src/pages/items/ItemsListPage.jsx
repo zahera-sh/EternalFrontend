@@ -74,103 +74,282 @@ function ItemsListPage() {
   }
 
   return (
-    <>
-      <div className="container">
-        <div>
-          <input
-            type="text"
-            placeholder="Search by title"
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-          />
+    <main className="container">
+      <div className="filter-section">
+        <input
+          type="text"
+          placeholder="Search by title"
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+        />
 
-          <select
-            value={category}
-            onChange={(event) => setCategory(event.target.value)}
-          >
-            <option value="" disabled>Select Category</option>
-            <option value="Watches">Watches</option>
-            <option value="Jewelry">Jewelry</option>
-            <option value="Art">Art</option>
-            <option value="Bags">Bags</option>
-            <option value="Coins">Coins</option>
-            <option value="Collectibles">Collectibles</option>
+        <select
+          value={category}
+          onChange={(event) => setCategory(event.target.value)}
+        >
+          <option value="" disabled>Select Category</option>
+          <option value="Watches">Watches</option>
+          <option value="Jewelry">Jewelry</option>
+          <option value="Art">Art</option>
+          <option value="Bags">Bags</option>
+          <option value="Coins">Coins</option>
+          <option value="Collectibles">Collectibles</option>
 
-          </select>
+        </select>
 
-          <button onClick={filter}>Filter</button>
-          <button onClick={clearFilter}>Clear</button>
+        <button onClick={filter}>Filter</button>
+        <button onClick={clearFilter}>Clear</button>
 
-        </div>
-        <br />
+      </div>
+      <br />
 
-        {filteredItems !== null ? (
-          <>
-            <h1>Filter Results</h1>
+      {filteredItems !== null ? (
 
-            {filteredItems.length === 0 ? (
-              <p>No items found.</p>
-            ) : (
-              filteredItems.map((item) => (
-                <div key={item._id}>
-                  <img src={item.image.url} alt="item-img" />
-                  <h2>{item.title}</h2>
+        <section className="filtered-section">
 
-                  <p>Category: {item.category}</p>
+          <h1>Filter Results</h1>
 
-                  <Link state={{ item }} to={`/items/${item._id}`}>
-                    See Details
-                  </Link>
+          {filteredItems.length === 0 ? (
+
+            <p className="empty-message">
+              No items found.
+            </p>
+
+          ) : (
+            <div className="item-list">
+
+              {filteredItems.map((item) => (
+
+                <div
+                  className="item-row"
+                  key={item._id}
+                >
+
+                  <img
+                    src={item.image.url}
+                    alt={item.title}
+                  />
+
+                  <div className="item-info">
+
+                    <div className="item-header">
+
+                      <h2>
+                        {item.title}
+                      </h2>
+
+                      <div className="item-meta">
+
+                        <span>
+                          {item.category}
+                        </span>
+
+                        <span>
+                          {item.status}
+                        </span>
+
+                      </div>
+
+                    </div>
+
+                    <p className="item-description">
+                      {item.description}
+                    </p>
+
+                    <Link
+                      state={{ item }}
+                      to={`/items/${item._id}`}
+                    >
+                      See Details
+                    </Link>
+
+                  </div>
+
                 </div>
-              ))
-            )}
-          </>
-        ) : (
-          <>
-            <h1>Now Open to Bid</h1>
 
+              ))}
+
+            </div>
+
+          )}
+
+        </section>
+
+      ) : (
+        <>
+
+          <section className="open-section">
+
+            <div className="section-heading" id='active-auctions'>
+              <h1>Now Open to Bid</h1>
+
+              <a href="#closed-auctions" className="jump-button">
+                Jump to Closed Auctions
+              </a>
+            </div>
             {activeItems.length === 0 ? (
-              <p>No active auctions available right now.</p>
-            ) : (
-              activeItems.filter((item) => item.owner._id !== user?._id).map((item) => (
-                <div key={item._id}>
-                  <img src={item.image.url} alt="item-img" />
-                  <h2>{item.title}</h2>
 
-                  <Link state={{ item }} to={`/items/${item._id}`}>
-                    See Details
-                  </Link>
-                </div>
-              ))
+              <p className="empty-message">
+                No active auctions available right now.
+              </p>
+
+            ) : (
+
+              <div className="item-list">
+
+                {activeItems.map((item) => (
+
+                  <div
+                    className="item-row"
+                    key={item._id}
+                  >
+
+                    <img
+                      src={item.image.url}
+                      alt={item.title}
+                    />
+
+                    <div className="item-info">
+
+                      <div className="item-header">
+
+                        <h2>
+                          {item.title}
+                        </h2>
+
+                        <div className="item-meta">
+
+                          <span>
+                            {item.category}
+                          </span>
+
+                          <span>
+                            {item.status}
+                          </span>
+
+                        </div>
+
+                      </div>
+
+                      <p className="item-description">
+                        {item.description}
+                      </p>
+
+                      <Link
+                        state={{ item }}
+                        to={`/items/${item._id}`}
+                      >
+                        See Details
+                      </Link>
+
+                    </div>
+
+                  </div>
+
+                ))}
+
+              </div>
+
             )}
 
-            <h1>Closed Auction</h1>
+          </section>
+
+          <section className="closed-section" id="closed-auctions">
+
+            <div className="section-heading">
+              <h1>Closed Auctions</h1>
+
+              <a href="#active-auctions" className="jump-button">
+                Back to Active Auctions
+              </a>
+            </div>
 
             {endedItems.length === 0 ? (
-              <p>No closed auctions yet.</p>
+
+              <p className="empty-message">
+                No closed auctions yet.
+              </p>
+
             ) : (
-              endedItems.filter((item) => item.owner._id !== user?._id).map((item) => (
-                <div key={item._id}>
-                  <h2>{item.title}</h2>
-                  <p>
-                    Highest Bid:{" "}
-                    {item.latestPrice || item.latestBid
-                      ? <p>${(
-                        item.currentPrice || item.latestBid
-                      ).toLocaleString()}`</p>
-                      : "No bids placed"}
-                  </p>
-                  <p>{item.status}</p>
-                  <Link state={{ item }} to={`/items/${item._id}`}>
-                    See Details
-                  </Link>
-                </div>
-              ))
+
+              <div className="item-list">
+
+                {endedItems.map((item) => (
+
+                  <div
+                    className="item-row closed-row"
+                    key={item._id}
+                  >
+
+                    <img
+                      src={item.image.url}
+                      alt={item.title}
+                    />
+
+                    <div className="item-info">
+
+                      <div className="item-header">
+
+                        <h2>
+                          {item.title}
+                        </h2>
+
+                        <div className="item-meta">
+
+                          <span>
+                            {item.category}
+                          </span>
+
+                          <span>
+                            {item.status}
+                          </span>
+
+                        </div>
+
+                      </div>
+
+                      <p className="item-description">
+                        {item.description}
+                      </p>
+
+                      <p className="highest-bid">
+
+                        Highest Bid:{" "}
+
+                        {item.currentPrice ||
+                          item.latestBid
+                          ? `$${(
+                            item.currentPrice ||
+                            item.latestBid
+                          ).toLocaleString()}`
+                          : "No bids placed"}
+
+                      </p>
+
+                      <Link
+                        state={{ item }}
+                        to={`/items/${item._id}`}
+                      >
+                        See Details
+                      </Link>
+
+                    </div>
+
+                  </div>
+
+                ))}
+
+              </div>
+
             )}
-          </>
-        )}
-      </div>
-    </>
+
+          </section>
+
+        </>
+
+      )}
+
+    </main>
   );
 }
 

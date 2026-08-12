@@ -205,14 +205,6 @@
 }
 
 
-.dashboard-message {
-    padding: 80px;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    font-size: 16px;
-    color: #4D191D;
-}
-
 @media (max-width: 900px) {
 
     .dashboard-page {

@@ -1,0 +1,739 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600&display=swap");
+
+.details-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 55px 0 80px;
+    color: #292722;
+}
+
+.one-item {
+    display: grid;
+    grid-template-columns: 48% 52%;
+
+    background: #fff;
+
+    border: 1px solid #ddd8ce;
+
+    box-shadow: 0 15px 40px rgba(50, 45, 38, 0.06);
+}
+
+.details-image {
+    height: 560px;
+    overflow: hidden;
+    background: #eeeae3;
+}
+
+.details-image img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition: transform 0.5s ease;
+}
+
+.details-image:hover img {
+    transform: scale(1.02);
+}
+
+.details-content {
+    padding: 50px;
+}
+
+.details-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.details-label {
+    margin: 0 0 10px;
+
+    color: #9a8565;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.details-heading h1 {
+    margin: 0;
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 48px;
+    font-weight: 600;
+
+    line-height: 1;
+}
+
+
+.details-status {
+    padding: 7px 11px;
+
+    border: 1px solid #d5cbbb;
+
+    color: #756b5e;
+
+    font-size: 9px;
+    font-weight: 600;
+
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+.details-description {
+    margin-top: 30px;
+
+    padding-top: 25px;
+
+    border-top: 1px solid #e0dbd2;
+}
+
+.details-description p {
+    margin: 0;
+
+    color: #716b63;
+
+    font-size: 20px;
+
+    line-height: 1.9;
+}
+
+.details-info {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 22px;
+
+    margin-top: 30px;
+
+    padding: 25px 0;
+
+    border-top: 1px solid #e0dbd2;
+    border-bottom: 1px solid #e0dbd2;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+.info-item span {
+    color: #938b81;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.info-item strong {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.details-dates {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 15px;
+
+    margin-top: 25px;
+}
+
+.details-dates div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+.details-dates span {
+    color: #938b81;
+
+    font-size: 15px;
+
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.details-dates strong {
+    color: #39352f;
+
+    font-size: 25px;
+    font-weight: 500;
+}
+
+
+.countdown-value {
+    color: #8b7658 !important;
+}
+
+.countdown-ended {
+    color: #a04f45 !important;
+}
+
+
+.favourite-area {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+
+    margin-top: 25px;
+}
+
+.favourite-area p {
+    margin: 0;
+
+    color: #8d867d;
+
+    font-size: 20px;
+}
+
+.favourite-button {
+    padding: 9px 14px;
+
+    background: transparent;
+
+    border: 1px solid #d4cec3;
+
+    color: #514a41;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.favourite-button:hover {
+    border-color: #8b7658;
+    color: #8b7658;
+}
+
+.favourite-button.active {
+    background: #f5f0e8;
+
+    border-color: #cdbda6;
+
+    color: #795f3c;
+}
+
+
+.bidding-section {
+    margin-top: 35px;
+
+    background: #fff;
+
+    border: 1px solid #ddd8ce;
+
+    box-shadow: 0 12px 35px rgba(50, 45, 38, 0.05);
+}
+
+.bidding-inner {
+    padding: 45px 50px;
+}
+
+
+.bidding-header {
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding-bottom: 30px;
+
+    border-bottom: 1px solid #ddd8ce;
+}
+
+.bidding-header h2 {
+    margin: 0;
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.display {
+    text-align: right;
+}
+
+.highest-bid {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #938b81;
+
+    font-size: 15px;
+
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.bid {
+    color: #292722;
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.no-bid {
+    color: #938b81;
+
+    font-family: "Montserrat", sans-serif;
+
+    font-size: 16px;
+    font-weight: 400;
+}
+
+
+.err {
+    margin-top: 20px;
+
+    padding: 12px 15px;
+
+    background: #faf0ee;
+
+    border-left: 3px solid #a85d51;
+
+    color: #8a4b43;
+
+    font-size: 16px;
+
+    line-height: 1.5;
+}
+
+
+.bid-form {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr auto;
+
+    align-items: end;
+
+    gap: 20px;
+
+    padding: 30px 0;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.form-group label {
+    color: #625b52;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+
+.form-group input[type="number"] {
+    width: 100%;
+    height: 46px;
+
+    padding: 0 13px;
+
+    background: #faf9f6;
+
+    border: 1px solid #d5cfc4;
+
+    outline: none;
+
+    color: #292722;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 17px;
+
+    transition: 0.2s ease;
+}
+
+.form-group input[type="number"]:focus {
+    border-color: #8b7658;
+}
+
+.form-group input::placeholder {
+    color: #aaa39a;
+}
+
+
+.auto-bid {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    min-height: 46px;
+}
+
+.auto-bid input {
+    width: 16px;
+    height: 16px;
+
+    accent-color: #8b7658;
+
+    cursor: pointer;
+}
+
+.auto-bid label {
+    color: #514a41;
+
+    font-size: 15px;
+}
+
+
+.place-bid-button {
+    height: 46px;
+
+    padding: 0 25px;
+
+    background: #292722;
+
+    border: 1px solid #292722;
+
+    color: #fff;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.place-bid-button:hover {
+    background: #8b7658;
+
+    border-color: #8b7658;
+}
+
+.place-bid-button:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+}
+
+.bid-history {
+    padding-top: 25px;
+
+    border-top: 1px solid #ddd8ce;
+}
+
+.bid-history-heading {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}
+
+.bid-history-heading h3 {
+    margin: 0;
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.bid-history-heading span {
+    color: #938b81;
+
+    font-size: 16px;
+
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.bid-history ul {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+
+    border-top: 1px solid #ebe7df;
+}
+
+.bid-history li {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 14px 5px;
+
+    border-bottom: 1px solid #ebe7df;
+
+    transition: 0.2s ease;
+}
+
+.bid-history li:hover {
+    background: #faf9f6;
+}
+
+.bid-history li>div {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.bid-history li strong {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.bid-history li span {
+    color: #7c756d;
+
+    font-size: 15px;
+}
+
+.bid-history li em {
+    color: #8b7658;
+
+    font-size: 15px;
+    font-style: normal;
+
+    letter-spacing: 0.5px;
+}
+
+.no-bids {
+    color: #999188;
+
+    font-size: 15px;
+}
+
+.details-loading {
+    min-height: 60vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #777169;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 13px;
+}
+
+.live-bids {
+    margin-top: 35px;
+
+    padding-top: 25px;
+
+    border-top: 1px solid rgba(184, 138, 68, 0.3);
+}
+
+.live-bids h3 {
+    margin: 0 0 18px;
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 27px;
+    font-weight: 600;
+
+    color: #1D1D1F;
+}
+
+
+.live-bids ul {
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+
+    border: 1px solid rgba(29, 29, 31, 0.12);
+}
+
+
+
+.live-bids li {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 14px 16px;
+
+    border-bottom: 1px solid rgba(29, 29, 31, 0.1);
+
+    background-color: rgba(244, 232, 209, 0.35);
+
+    font-family: "Montserrat", sans-serif;
+
+    font-size: 12px;
+
+    color: #77705F;
+
+    transition: background-color 0.25s ease;
+}
+
+.live-bids li:last-child {
+    border-bottom: none;
+}
+
+.live-bids li:hover {
+    background-color: rgba(184, 138, 68, 0.08);
+}
+
+
+
+.live-bids li strong {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 20px;
+    font-weight: 600;
+
+    color: #B88A44;
+}
+
+
+
+.live-bids li span {
+    font-size: 11px;
+
+    color: #77705F;
+}
+
+@media (max-width: 950px) {
+
+    .details-container {
+        width: 92%;
+    }
+
+    .one-item {
+        grid-template-columns: 45% 55%;
+    }
+
+    .details-content {
+        padding: 35px;
+    }
+
+    .details-heading h1 {
+        font-size: 40px;
+    }
+
+    .bid-form {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .place-bid-button {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .details-container {
+        width: 94%;
+        padding: 25px 0 60px;
+    }
+
+    .one-item {
+        display: block;
+    }
+
+    .details-image {
+        height: 380px;
+    }
+
+    .details-content {
+        padding: 30px 22px;
+    }
+
+    .details-heading {
+        flex-direction: column;
+    }
+
+    .details-heading h1 {
+        font-size: 40px;
+    }
+
+    .details-status {
+        align-self: flex-start;
+    }
+
+    .details-info {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .details-dates {
+        grid-template-columns: 1fr;
+    }
+
+    .favourite-area {
+        margin-top: 25px;
+    }
+
+    .bidding-inner {
+        padding: 30px 22px;
+    }
+
+    .bidding-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .display {
+        text-align: left;
+    }
+
+    .bid-form {
+        grid-template-columns: 1fr;
+    }
+
+    .place-bid-button {
+        width: 100%;
+    }
+
+    .bid-history li>div {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 3px;
+    }
+}

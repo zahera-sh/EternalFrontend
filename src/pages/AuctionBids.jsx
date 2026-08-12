@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 const socket = io("http://localhost:5000");
-
+import '../style/item-details.css'
 function AuctionBids({ auctionId }) {
   const [bids, setBids] = useState([]);
 
@@ -18,12 +18,14 @@ function AuctionBids({ auctionId }) {
   }, [auctionId]);
 
   return (
-    <div>
+    <div className="live-bids">
       <h3>Live Bids</h3>
+
       <ul>
         {bids.map((bid, index) => (
           <li key={index}>
-            <strong>${bid.amount}</strong> by {bid.bidder}
+            <strong>${bid.amount}</strong>
+            <span>by {bid.bidder}</span>
           </li>
         ))}
       </ul>

@@ -54,7 +54,7 @@ function Dashboard() {
                     ETERNAL MEMBER
                 </p>
 
-                <h1>Welcome, {profileUser.username}</h1>
+                <h1>Welcome, {profileUser.username}</h1> <img src="/favicon.png" alt="" />
 
                 <div className="profile-info">
                     <span>{profileUser.email}</span>

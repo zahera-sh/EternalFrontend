@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { useAuth } from "../context/AuthContext";
@@ -6,11 +5,12 @@ import { getAllProfile } from "../services/userService";
 import "../style/dashboard.css";
 
 function Dashboard() {
-    document.title = "Eternal | Profile"
+    document.title = "Eternal | Profile";
 
     const { user } = useAuth();
     const [dashboard, setDashboard] = useState(null);
     const [error, setError] = useState("");
+    const [activeSection, setActiveSection] = useState("items");
 
     async function loadDashboard() {
         try {
@@ -45,6 +45,13 @@ function Dashboard() {
         favouritedItems,
         myBids,
     } = dashboard;
+
+    const uniqueBidItems = [
+        ...new Map(
+            myBids.map((bid) => [bid.item._id, bid.item])
+        ).values(),
+    ];
+
     return (
         <main className="dashboard-page">
 
@@ -54,16 +61,20 @@ function Dashboard() {
                     ETERNAL MEMBER
                 </p>
 
-                <h1>Welcome, {profileUser.username}
+                <h1>
+                    Welcome, {profileUser.username}
+
                     {profileUser.isVerifiedSeller && (
                         <span className="verified">
                             <img src="/favicon.png" alt="" />
                         </span>
-                    )}</h1>
+                    )}
+                </h1>
 
                 <div className="profile-info">
                     <span>{profileUser.email}</span>
                     <span>{profileUser.role}</span>
+
                     <span>
                         Member since {formatDate(profileUser.createdAt)}
                     </span>
@@ -77,133 +88,190 @@ function Dashboard() {
 
             </section>
 
+            <section className="dashboard-layout">
 
-            <section className="dashboard-columns">
+                <aside className="dashboard-sidebar">
 
-                <div className="dashboard-section">
+                    <p className="sidebar-title">
+                        MY COLLECTION
+                    </p>
 
-                    <div className="section-header">
-                        <div>
-                            <p>YOUR PIECES</p>
-                            <h2>My Items</h2>
-                        </div>
+                    <button
+                        className={activeSection === "items" ? "active" : ""}
+                        onClick={() => setActiveSection("items")}
+                    >
+                        <span>My Items</span>
+                        <span>{myItems.length}</span>
+                    </button>
 
-                        <Link to="/items/create">
-                            + Add
-                        </Link>
-                    </div>
+                    <button
+                        className={activeSection === "favourites" ? "active" : ""}
+                        onClick={() => setActiveSection("favourites")}
+                    >
+                        <span>Favourites</span>
+                        <span>{favouritedItems.length}</span>
+                    </button>
 
-                    {myItems.length === 0 ? (
-                        <p className="empty-text">
-                            No items yet.
-                        </p>
-                    ) : (
-                        <div className="item-list">
+                    <button
+                        className={activeSection === "bids" ? "active" : ""}
+                        onClick={() => setActiveSection("bids")}
+                    >
+                        <span>My Bids</span>
+                        <span>{uniqueBidItems.length}</span>
+                    </button>
 
-                            {myItems.map((item) => (
-                                <Link
-                                    to={`/items/${item._id}`}
-                                    className="mini-card"
-                                    key={item._id}
-                                >
-                                    <img
-                                        src={item.image.url}
-                                        alt={item.title}
-                                    />
+                </aside>
 
-                                    <div>
-                                        <h3>{item.title}</h3>
-                                        <p>
-                                            {item.startingPrice}
-                                        </p>
-                                        <small>
-                                            {item.status}
-                                        </small>
-                                    </div>
-                                </Link>
-                            ))}
+                <div className="dashboard-content">
 
-                        </div>
-                    )}
+                    {activeSection === "items" && (
+                        <div className="dashboard-section">
 
-                </div>
-
-
-                <div className="dashboard-section">
-
-                    <div className="section-header">
-                        <div>
-                            <p>SAVED PIECES</p>
-                            <h2>Favourites</h2>
-                        </div>
-                    </div>
-
-                    {favouritedItems.length === 0 ? (
-                        <p className="empty-text">
-                            No favourites yet.
-                        </p>
-                    ) : (
-                        <div className="item-list">
-
-                            {favouritedItems.map((item) => (
-                                <Link
-                                    to={`/items/${item._id}`}
-                                    className="mini-card"
-                                    key={item._id}
-                                >
-                                    <img
-                                        src={item.image.url}
-                                        alt={item.title}
-                                    />
-
-                                    <div>
-                                        <h3>{item.title}</h3>
-                                        <p>
-                                            {item.startingPrice}
-                                        </p>
-                                        <small>
-                                            {item.status}
-                                        </small>
-                                    </div>
-                                </Link>
-                            ))}
-
-                        </div>
-                    )}
-
-                </div>
-
-
-                <div className="dashboard-section">
-
-                    <div className="section-header">
-                        <div>
-                            <p>AUCTION ACTIVITY</p>
-                            <h2>My Bids</h2>
-                        </div>
-                    </div>
-
-                    {myBids.length === 0 ? (
-                        <p className="empty-text">
-                            No bids yet.
-                        </p>
-                    ) : (
-                        <div className="item-list">
-                            {[...new Map(myBids.map(bid => [bid.item._id, bid.item])).values()].map((item) => (
-
-                                <div key={item._id} className="mini-card">
-                                    <Link
-                                        to={`/items/${item?._id}`}>
-                                        <h2>{item.title}</h2>
-                                        {myBids.filter((bid) => String(bid.item._id) === String(item._id))
-                                            .map((bid) => (
-                                                <p key={bid._id}>
-                                                    Your bid: {bid.amount}
-                                                </p>
-                                            ))
-                                        }</ Link>
+                            <div className="section-header">
+                                <div>
+                                    <p>YOUR PIECES</p>
+                                    <h2>My Items</h2>
                                 </div>
-                            ))}
+
+                                <Link to="/items/create">
+                                    + Add
+                                </Link>
+                            </div>
+
+                            {myItems.length === 0 ? (
+                                <p className="empty-text">
+                                    No items yet.
+                                </p>
+                            ) : (
+                                <div className="item-list">
+
+                                    {myItems.map((item) => (
+                                        <Link
+                                            to={`/items/${item._id}`}
+                                            className="mini-card"
+                                            key={item._id}
+                                        >
+                                            <img
+                                                src={item.image.url}
+                                                alt={item.title}
+                                            />
+
+                                            <div>
+                                                <h3>{item.title}</h3>
+
+                                                <p>
+                                                    {item.startingPrice}
+                                                </p>
+
+                                                <small>
+                                                    {item.status}
+                                                </small>
+                                            </div>
+                                        </Link>
+                                    ))}
+
+                                </div>
+                            )}
+
+                        </div>
+                    )}
+
+                    {activeSection === "favourites" && (
+                        <div className="dashboard-section">
+
+                            <div className="section-header">
+                                <div>
+                                    <p>SAVED PIECES</p>
+                                    <h2>Favourites</h2>
+                                </div>
+                            </div>
+
+                            {favouritedItems.length === 0 ? (
+                                <p className="empty-text">
+                                    No favourites yet.
+                                </p>
+                            ) : (
+                                <div className="item-list">
+
+                                    {favouritedItems.map((item) => (
+                                        <Link
+                                            to={`/items/${item._id}`}
+                                            className="mini-card"
+                                            key={item._id}
+                                        >
+                                            <img
+                                                src={item.image.url}
+                                                alt={item.title}
+                                            />
+
+                                            <div>
+                                                <h3>{item.title}</h3>
+
+                                                <p>
+                                                    {item.startingPrice}
+                                                </p>
+
+                                                <small>
+                                                    {item.status}
+                                                </small>
+                                            </div>
+                                        </Link>
+                                    ))}
+
+                                </div>
+                            )}
+
+                        </div>
+                    )}
+
+                    {activeSection === "bids" && (
+                        <div className="dashboard-section">
+
+                            <div className="section-header">
+                                <div>
+                                    <p>AUCTION ACTIVITY</p>
+                                    <h2>My Bids</h2>
+                                </div>
+                            </div>
+
+                            {uniqueBidItems.length === 0 ? (
+                                <p className="empty-text">
+                                    No bids yet.
+                                </p>
+                            ) : (
+                                <div className="item-list">
+
+                                    {uniqueBidItems.map((item) => (
+                                        <div
+                                            key={item._id}
+                                            className="mini-card"
+                                        >
+                                            <Link
+                                                to={`/items/${item._id}`}
+                                            >
+                                                <h3>{item.title}</h3>
+                                            </Link>
+
+                                            <div>
+                                                {myBids
+                                                    .filter(
+                                                        (bid) =>
+                                                            String(
+                                                                bid.item._id
+                                                            ) ===
+                                                            String(item._id)
+                                                    )
+                                                    .map((bid) => (
+                                                        <p key={bid._id}>
+                                                            Your bid: {bid.amount}
+                                                        </p>
+                                                    ))}
+                                            </div>
+                                        </div>
+                                    ))}
+
+                                </div>
+                            )}
 
                         </div>
                     )}
@@ -212,7 +280,7 @@ function Dashboard() {
 
             </section>
 
-        </main >
+        </main>
     );
 }
 

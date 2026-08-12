@@ -22,3 +22,125 @@ body {
 .err {
     color: #8b4d45;
 }
+
+
+.legal-page {
+    min-height: 100vh;
+    padding: 70px 20px;
+    background: #242321;
+    color: #e9e3d8;
+    font-family: "Montserrat", sans-serif;
+}
+
+.legal-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 50px 60px;
+    background: #2d2b28;
+    border: 1px solid rgba(184, 138, 68, 0.25);
+    border-radius: 8px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+}
+
+.legal-container h1 {
+    margin: 0;
+    color: #f3eadc;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 48px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.last-updated {
+    margin: 8px 0 35px;
+    color: #b88a44;
+    font-size:20px;
+    letter-spacing: 0.4px;
+}
+
+.legal-container p {
+    margin: 0 0 18px;
+    color: #d4cec4;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.legal-container section {
+    margin-top: 38px;
+}
+
+.legal-container h2 {
+    margin: 0 0 16px;
+    padding-bottom: 8px;
+    color: #f0e7d9;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 28px;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(184, 138, 68, 0.25);
+}
+
+.legal-container h3 {
+    margin: 25px 0 10px;
+    color: #c99b59;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.legal-container ul {
+    margin: 10px 0 20px;
+    padding-left: 22px;
+}
+
+.legal-container li {
+    margin-bottom: 8px;
+    color: #cbc5bb;
+    font-size:18px;
+    line-height: 1.7;
+}
+
+.legal-container li::marker {
+    color: #b88a44;
+}
+
+.legal-container a {
+    color: #c99b59;
+    text-decoration: none;
+}
+
+.legal-container a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .legal-page {
+        padding: 40px 15px;
+    }
+
+    .legal-container {
+        padding: 35px 25px;
+    }
+
+    .legal-container h1 {
+        font-size: 40px;
+    }
+
+    .legal-container h2 {
+        font-size: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .legal-container {
+        padding: 28px 20px;
+    }
+
+    .legal-container h1 {
+        font-size: 34px;
+    }
+
+    .legal-container p,
+    .legal-container li {
+        font-size: 13px;
+    }
+}

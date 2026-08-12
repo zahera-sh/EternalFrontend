@@ -16,10 +16,11 @@
 }
 
 .dashboard-eyebrow,
-.section-header p {
+.section-header p,
+.sidebar-title {
     margin: 0 0 6px;
     font-family: "Montserrat", sans-serif;
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 500;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -39,18 +40,15 @@
     flex-wrap: wrap;
     gap: 25px;
     font-family: "Montserrat", sans-serif;
-    font-size: 14px;
+    font-size: 18px;
     color: #A09E7B;
-}
-
-.verified {
-    color: #B88A44;
 }
 
 .verified {
     display: inline-flex;
     align-items: center;
     margin-left: 10px;
+    color: #B88A44;
     perspective: 500px;
 }
 
@@ -61,7 +59,6 @@
 }
 
 @keyframes flipBling {
-
     0%,
     15% {
         transform: rotateY(0deg);
@@ -90,22 +87,72 @@
     }
 }
 
-.dashboard-columns {
+
+.dashboard-layout {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 220px 1fr;
     gap: 20px;
+    align-items: start;
+    height: calc(100vh - 230px);
 }
 
+.dashboard-sidebar {
+    padding: 25px 15px;
+    background-color: #1D1D1F;
+    border: 1px solid rgba(184, 138, 68, 0.3);
+}
+
+.dashboard-content {
+    min-width: 0;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
 .dashboard-section {
     min-width: 0;
-    height: calc(100vh - 120px);
-    padding: 28px;
+    min-height: 100%;
+    padding: 30px;
     background-color: #fffaf0;
     border: 1px solid rgba(184, 138, 68, 0.25);
-    overflow-y: auto;
-    overflow-x: hidden;
     box-sizing: border-box;
+}
+.sidebar-title {
+    padding: 0 12px;
+    margin-bottom: 18px;
+}
+
+.dashboard-sidebar button {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 12px;
+    margin-bottom: 5px;
+    border: none;
+    background: transparent;
+    color: #A09E7B;
+    font-family: "Montserrat", sans-serif;
+    font-size: 30px;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.dashboard-sidebar button:hover {
+    color: #F4E8D1;
+    background-color: rgba(244, 232, 209, 0.06);
+}
+
+.dashboard-sidebar button.active {
+    color: #F4E8D1;
+    background-color: rgba(184, 138, 68, 0.18);
+    border-left: 2px solid #B88A44;
+}
+
+.dashboard-sidebar button span:last-child {
+    color: #B88A44;
+    font-size: 18px;
 }
 
 .section-header {
@@ -136,7 +183,6 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
-    overflow: hidden;
 }
 
 .mini-card {
@@ -188,15 +234,8 @@
     color: #4D191D;
 }
 
-.auto-bid {
-    display: block;
-    margin-top: 4px;
-    color: #B88A44 !important;
-}
-
-
 .empty-text {
-    padding: 30px 10px;
+    padding: 50px 10px;
     text-align: center;
     font-family: "Montserrat", sans-serif;
     font-size: 13px;
@@ -204,22 +243,34 @@
     color: #A09E7B;
 }
 
-
 @media (max-width: 900px) {
-
     .dashboard-page {
         padding: 40px 4%;
     }
 
-    .dashboard-columns {
+    .dashboard-layout {
         grid-template-columns: 1fr;
     }
 
+    .dashboard-sidebar {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 12px;
+    }
+
+    .sidebar-title {
+        display: none;
+    }
+
+    .dashboard-sidebar button {
+        margin: 0;
+        justify-content: center;
+        gap: 8px;
+    }
 }
 
-
 @media (max-width: 600px) {
-
     .dashboard-page {
         padding: 30px 15px;
     }
@@ -235,8 +286,16 @@
     .profile-info {
         flex-direction: column;
         gap: 10px;
-
         font-size: 12px;
+    }
+
+    .dashboard-sidebar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .dashboard-sidebar button {
+        justify-content: space-between;
     }
 
     .dashboard-section {
@@ -255,5 +314,4 @@
     .mini-card h3 {
         font-size: 21px;
     }
-
 }

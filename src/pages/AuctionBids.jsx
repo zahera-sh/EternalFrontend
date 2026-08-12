@@ -6,10 +6,8 @@ function AuctionBids({ auctionId }) {
   const [bids, setBids] = useState([]);
 
   useEffect(() => {
-    // Join the auction room on mount
     socket.emit("join_auction", auctionId);
 
-    // Listen for incoming bids from other users
     socket.on("bid_updated", (newBid) => {
       setBids((prevBids) => [newBid, ...prevBids]);
     });

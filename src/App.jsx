@@ -1,17 +1,13 @@
 import { Route, Routes } from "react-router";
-// imports
 import { useState, useEffect } from "react";
 
-// services
 import { getCurrentUser, logout } from "./services/authService";
 import { useAuth } from "./context/AuthContext";
 
-// components
 import Navbar from "./components/Navbar";
 import IsAdmin from "./components/IsAdmin";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-// pages
 import SignupPage from "./pages/SignupPage";
 import Homepage from "./pages/Homepage";
 import SignInPage from "./pages/SigninPage";
@@ -22,11 +18,7 @@ import ItemDetailsPage from "./pages/items/ItemDetailsPage";
 import ItemsListPage from "./pages/items/ItemsListPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
-
 function App() {
-  // const { user } = useAuth()
-  // console.log(user)
-
   return (
     <div>
       <Navbar />

@@ -180,8 +180,8 @@ function ItemDetailsPage() {
         );
         const updatedList = exists
           ? prevBids.map((b) =>
-              String(b._id) === String(newBid._id) ? newBid : b,
-            )
+            String(b._id) === String(newBid._id) ? newBid : b,
+          )
           : [newBid, ...prevBids];
         // Ensure highest bid is always updated to the highest value
         const topBid = [...updatedList].sort(
@@ -224,8 +224,8 @@ function ItemDetailsPage() {
     if (!amount || amount < minRequiredBid) {
       const message = highestBid
         ? `Your bid must be at least $${MIN_INCREMENT} higher than $${Number(
-            highestBid.amount,
-          ).toLocaleString()}. Minimum: $${minRequiredBid.toLocaleString()}.`
+          highestBid.amount,
+        ).toLocaleString()}. Minimum: $${minRequiredBid.toLocaleString()}.`
         : `Your bid must be at least $${minRequiredBid.toLocaleString()}.`;
 
       setError(message);
@@ -334,9 +334,9 @@ function ItemDetailsPage() {
           <p>favourites: {item.favourites.length}</p>
 
           {user &&
-          item.favourites.some(
-            (oneId) => String(oneId) === String(user._id),
-          ) ? (
+            item.favourites.some(
+              (oneId) => String(oneId) === String(user._id),
+            ) ? (
             <button onClick={handleSubmitUnfav}>🤎 Unfavourite</button>
           ) : (
             <button onClick={handleSubmitFav}>🩶 Favourite</button>
@@ -346,8 +346,8 @@ function ItemDetailsPage() {
         <p>Loading....</p>
       )}
 
-      {/* Bidding Section */}
-      {item.owner._id !== user?._id &&
+
+      {item.owner._id !== user?._id && user &&
         !["Ended", "Starting Soon"].includes(item.status) && (
           <section className="bidding-section">
             <h2>Start Bidding</h2>

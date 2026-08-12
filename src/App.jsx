@@ -17,6 +17,9 @@ import CreateItemPage from "./pages/items/CreateItemPage";
 import ItemDetailsPage from "./pages/items/ItemDetailsPage";
 import ItemsListPage from "./pages/items/ItemsListPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import Footer from "./components/Footer";
+import PrivacyPolicyPage from "./pages/legal/PrivacyPolicyPage";
+import TermsPage from "./pages/legal/TermsAndCondPage";
 
 function App() {
   return (
@@ -57,7 +60,10 @@ function App() {
 
 
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="/privacy" element={<PrivacyPolicyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
       </Routes>
+      <Footer/>
     </div>
   );
 }

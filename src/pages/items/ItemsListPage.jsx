@@ -5,6 +5,8 @@ import "../../style/item-styles.css";
 import { useAuth } from "../../context/AuthContext";
 
 function ItemsListPage() {
+  document.title = "Eternal | Our Collection"
+
   const { user } = useAuth()
   const [endedItems, setEndedItems] = useState([]);
   const [activeItems, setActiveItems] = useState([]);
@@ -26,11 +28,11 @@ function ItemsListPage() {
           : response?.data || [];
 
         const active = itemsArray.filter((item) =>
-          ["Active", "Starting Soon"].includes(item.status) )
+          ["Active", "Starting Soon"].includes(item.status))
 
         const ended = itemsArray.filter((item) =>
-            ["Ended", "Sold"].includes(item.status)
-          );
+          ["Ended", "Sold"].includes(item.status)
+        );
         setActiveItems(active);
         setEndedItems(ended);
       } catch (err) {
@@ -152,13 +154,13 @@ function ItemsListPage() {
                   <h2>{item.title}</h2>
                   <p>
                     Highest Bid:{" "}
-                    {item.currentPrice || item.latestBid
-                      ? `$${(
+                    {item.latestPrice || item.latestBid
+                      ? <p>${(
                         item.currentPrice || item.latestBid
-                      ).toLocaleString()}`
+                      ).toLocaleString()}`</p>
                       : "No bids placed"}
                   </p>
-
+                  <p>{item.status}</p>
                   <Link state={{ item }} to={`/items/${item._id}`}>
                     See Details
                   </Link>

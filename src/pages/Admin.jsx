@@ -4,6 +4,8 @@ import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router'
 
 function Admin() {
+    document.title = "Eternal | Admin"
+
     const navigate = useNavigate()
     const { user } = useAuth()
     const [users, setUsers] = useState([])
@@ -47,7 +49,7 @@ function Admin() {
                     {oneUser.isDeleted ? <p className='error'>Deleted User</p> : (<>
                         <button onClick={() => { deletedUser(oneUser._id) }}>Delete User</button>
                     </>)}
-                    
+
                     {oneUser.isDeleted ? null : (
                         oneUser.isVerifiedSeller ? (
                             <p className="error">Verified User</p>

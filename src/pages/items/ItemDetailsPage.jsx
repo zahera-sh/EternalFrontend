@@ -286,7 +286,10 @@ function ItemDetailsPage() {
     return <div>Item not found.</div>;
   }
 
+  document.title = `Eternal | ${item.title}`
+
   return (
+
     <>
       {item ? (
         <>
@@ -333,13 +336,18 @@ function ItemDetailsPage() {
 
           <p>favourites: {item.favourites.length}</p>
 
-          {user &&
+          {user && item.owner._id !== user._id && (
             item.favourites.some(
-              (oneId) => String(oneId) === String(user._id),
+              (oneId) => String(oneId) === String(user._id)
             ) ? (
-            <button onClick={handleSubmitUnfav}>🤎 Unfavourite</button>
-          ) : (
-            <button onClick={handleSubmitFav}>🩶 Favourite</button>
+              <button onClick={handleSubmitUnfav}>
+                🤎 Unfavourite
+              </button>
+            ) : (
+              <button onClick={handleSubmitFav}>
+                🩶 Favourite
+              </button>
+            )
           )}
         </>
       ) : (

@@ -6,6 +6,7 @@ import { getAllProfile } from "../services/userService";
 import "../style/dashboard.css";
 
 function Dashboard() {
+    document.title = "Eternal | Profile"
 
     const { user } = useAuth();
     const [dashboard, setDashboard] = useState(null);
@@ -42,9 +43,9 @@ function Dashboard() {
         user: profileUser,
         myItems,
         favouritedItems,
-        myBids
+        myBids,
     } = dashboard;
-
+    console.log(myBids)
     return (
         <main className="dashboard-page">
 
@@ -54,7 +55,12 @@ function Dashboard() {
                     ETERNAL MEMBER
                 </p>
 
-                <h1>Welcome, {profileUser.username}</h1> <img src="/favicon.png" alt="" />
+                <h1>Welcome, {profileUser.username}
+                    {profileUser.isVerifiedSeller && (
+                        <span className="verified">
+                            <img src="/favicon.png" alt="" />
+                        </span>
+                    )}</h1>
 
                 <div className="profile-info">
                     <span>{profileUser.email}</span>
@@ -184,40 +190,20 @@ function Dashboard() {
                         </p>
                     ) : (
                         <div className="item-list">
+                            {[...new Map(myBids.map(bid => [bid.item._id, bid.item])).values()].map((item) => (
 
-                            {myBids.map((bid) => (
-                                <Link
-                                    to={`/items/${bid.item?._id}`}
-                                    className="mini-card"
-                                    key={bid._id}
-                                >
-                                    {bid.item?.image?.url && (
-                                        <img
-                                            src={bid.item.image.url}
-                                            alt={bid.item.title}
-                                        />
-                                    )}
-
-                                    <div>
-                                        <h3>
-                                            {bid.item?.title}
-                                        </h3>
-
-                                        <p>
-                                            Your bid: {bid.amount}
-                                        </p>
-
-                                        <small>
-                                            {formatDate(bid.createdAt)}
-                                        </small>
-
-                                        {bid.isAutoBid && (
-                                            <small className="auto-bid">
-                                                ✦ Auto
-                                            </small>
-                                        )}
-                                    </div>
-                                </Link>
+                                <div key={item._id} className="mini-card">
+                                    <Link
+                                        to={`/items/${item?._id}`}>
+                                        <h2>{item.title}</h2>
+                                        {myBids.filter((bid) => String(bid.item._id) === String(item._id))
+                                            .map((bid) => (
+                                                <p key={bid._id}>
+                                                    Your bid: {bid.amount}
+                                                </p>
+                                            ))
+                                        }</ Link>
+                                </div>
                             ))}
 
                         </div>
@@ -227,7 +213,7 @@ function Dashboard() {
 
             </section>
 
-        </main>
+        </main >
     );
 }
 

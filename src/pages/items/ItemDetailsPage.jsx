@@ -169,10 +169,8 @@ function ItemDetailsPage() {
 
     const socket = io(SOCKET_URL);
 
-    // Join room for this specific item
     socket.emit("join_auction", itemId);
 
-    // Real-time bid listener
     socket.on("bid_updated", (newBid) => {
       setBids((prevBids) => {
         const exists = prevBids.some(
@@ -180,10 +178,9 @@ function ItemDetailsPage() {
         );
         const updatedList = exists
           ? prevBids.map((b) =>
-            String(b._id) === String(newBid._id) ? newBid : b,
-          )
+              String(b._id) === String(newBid._id) ? newBid : b,
+            )
           : [newBid, ...prevBids];
-        // Ensure highest bid is always updated to the highest value
         const topBid = [...updatedList].sort(
           (a, b) => Number(b.amount) - Number(a.amount),
         )[0];
@@ -202,7 +199,6 @@ function ItemDetailsPage() {
     ? Number(highestBid.amount) + MIN_INCREMENT
     : Number(item?.startingPrice) || 1;
 
-  // bidder names
   function getBidderName(bidder) {
     if (typeof bidder === "object" && bidder?.username) {
       return bidder.username;
@@ -224,8 +220,8 @@ function ItemDetailsPage() {
     if (!amount || amount < minRequiredBid) {
       const message = highestBid
         ? `Your bid must be at least $${MIN_INCREMENT} higher than $${Number(
-          highestBid.amount,
-        ).toLocaleString()}. Minimum: $${minRequiredBid.toLocaleString()}.`
+            highestBid.amount,
+          ).toLocaleString()}. Minimum: $${minRequiredBid.toLocaleString()}.`
         : `Your bid must be at least $${minRequiredBid.toLocaleString()}.`;
 
       setError(message);
@@ -248,7 +244,6 @@ function ItemDetailsPage() {
 
       await createBid(itemId, payload);
 
-      // Reset form
       setBidAmount("");
       setMaxBidLimit("");
       setIsAutoBid(false);
@@ -354,8 +349,8 @@ function ItemDetailsPage() {
         <p>Loading....</p>
       )}
 
-
-      {item.owner._id !== user?._id && user &&
+      {item.owner._id !== user?._id &&
+        user &&
         !["Ended", "Starting Soon"].includes(item.status) && (
           <section className="bidding-section">
             <h2>Start Bidding</h2>

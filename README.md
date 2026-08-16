@@ -25,14 +25,15 @@ The platform provides a complete auction experience, from creating and discoveri
 
 
 ## Live Application
-- **Frontend:** Deployed frontend
-- **Backend API:** Deployed Backend
+- **Frontend:** [Deployed frontend](https://eternalauctionhouse.netlify.app/)
+- **Backend API:** [Deployed Backend](https://eternalbackend-6qqp.onrender.com/)
 - **Backend Repository:** [Backend Github Repository](https://github.com/zahera-sh/EternalBackend)
 
 
 ## Screenshots
 ### 📸 Homepage:
-![homepage]()
+![homepage](public/images/homepage-ss-1.png)
+![homepage](public/images/homepage-ss-2.png)
 
 
 ## Technologies Used
